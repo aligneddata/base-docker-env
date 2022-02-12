@@ -68,6 +68,8 @@ services:
       - SPARK_SSL_ENABLED=no
     #ports:
     #  - '58080:8080'
+    volumes:
+      - ../try-spark:/try-spark
     networks:
       - devnet
     
