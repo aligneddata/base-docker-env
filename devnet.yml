@@ -1,0 +1,96 @@
+version: '3'
+
+
+# Note:
+# devnet is a bridge created externally
+# relies on a proxy-based dns to support host->instance uses
+
+# Use example:
+# docker-compose -f devnet.yml up --scale spark-worker=2
+
+services:
+
+  busybox:
+    hostname: busybox
+    image: busybox
+    command: sleep infinity
+    networks:
+      - devnet
+
+  mariadb:
+    hostname: mariadb
+    image: mariadb:10.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootlzm
+    volumes:
+      #- /home/docker-data/mariadb:/var/lib/mysql
+      - mariadbvol:/var/lib/mysql
+    #ports:
+    #  - 53306:3306
+    networks:
+      - devnet
+
+  adminer:
+    hostname: adminer
+    image: adminer
+    restart: always
+    ports:
+      - 58081:8080
+    networks:
+      - devnet
+
+  postgres:
+    hostname: postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    #ports:
+    #  - 55432:5432
+    volumes:
+      #- /home/docker-data/postgres:/var/lib/postgresql/data
+      - postgresvol:/var/lib/postgresql/data
+    networks:
+      - devnet
+
+  spark:
+    hostname: spark
+    image: docker.io/bitnami/spark:3
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    #ports:
+    #  - '58080:8080'
+    networks:
+      - devnet
+    
+  spark-worker:
+    hostname: spark-worker
+    image: docker.io/bitnami/spark:3
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark:7077
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=1
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    networks:
+      - devnet
+
+
+networks:
+  devnet:
+
+volumes:
+  mariadbvol:
+  postgresvol:
+
