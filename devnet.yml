@@ -10,6 +10,7 @@ version: '3'
 
 services:
 
+  # docker container exec base-docker-env_busybox_1 ping spark-worker
   busybox:
     hostname: busybox
     image: busybox
@@ -70,6 +71,7 @@ services:
     #  - '58080:8080'
     volumes:
       - ../try-spark:/try-spark
+      - ../try-spark-w-scala:/try-spark-w-scala
     networks:
       - devnet
     

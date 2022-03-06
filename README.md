@@ -11,3 +11,4 @@ https://dev.mysql.com/doc/employee/en/employees-installation.html
 database in postres:
 database: devdb
 table: t (i int)
+
