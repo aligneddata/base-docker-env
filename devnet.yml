@@ -6,7 +6,7 @@ version: '3'
 # relies on a proxy-based dns to support host->instance uses
 
 # Use example:
-# docker-compose -f devnet.yml up --scale spark-worker=2
+# docker-compose -f devnet.yml up --scale spark-worker=2 --scale kafka=2
 
 services:
 
@@ -60,7 +60,7 @@ services:
 
   spark:
     hostname: spark
-    image: docker.io/bitnami/spark:3
+    image: docker.io/bitnami/spark:3.2.1-debian-10-r38
     environment:
       - SPARK_MODE=master
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
@@ -69,15 +69,16 @@ services:
       - SPARK_SSL_ENABLED=no
     #ports:
     #  - '58080:8080'
+    networks:
+      - devnet
     volumes:
       - ../try-spark:/try-spark
       - ../try-spark-w-scala:/try-spark-w-scala
-    networks:
-      - devnet
+      - ../spark-streaming-linkedin:/webvisits
     
   spark-worker:
     hostname: spark-worker
-    image: docker.io/bitnami/spark:3
+    image: docker.io/bitnami/spark:3.2.1-debian-10-r38
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark:7077
@@ -87,6 +88,91 @@ services:
       - SPARK_RPC_ENCRYPTION_ENABLED=no
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
+    networks:
+      - devnet
+    volumes:
+      - ../try-spark:/try-spark
+      - ../try-spark-w-scala:/try-spark-w-scala
+      - ../spark-streaming-linkedin:/webvisits
+
+  spark-aux:
+    hostname: spark-aux
+    image: docker.io/bitnami/spark:3.2.1-debian-10-r38
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    #ports:
+    #  - '58080:8080'
+    networks:
+      - devnet
+    volumes:
+      - ../try-spark:/try-spark
+      - ../try-spark-w-scala:/try-spark-w-scala
+      - ../spark-streaming-linkedin:/webvisits
+
+  zookeeper:
+    hostname: zookeeper
+    image: 'bitnami/zookeeper:3.7'
+    #ports:
+    #  - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - devnet
+  
+
+  kafka:
+    hostname: kafka
+    image: 'bitnami/kafka:3'
+    #ports:
+    #  - '9092:9092'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+    networks:
+      - devnet
+
+
+  # kafka2:
+  #   hostname: kafka2
+  #   image: 'bitnami/kafka:3'
+  #   #ports:
+  #   #  - '9092:9092'
+  #   environment:
+  #     - KAFKA_BROKER_ID=2
+  #     - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+  #     - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka2:9092
+  #     - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+  #     - ALLOW_PLAINTEXT_LISTENER=yes
+  #     - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true      
+  #   depends_on:
+  #     - zookeeper
+  #   networks:
+  #     - devnet
+
+
+  redis:
+    hostname: redis
+    image: 'redis:6.2.6'
+    #ports:
+    #  - '6379:6379'
+    networks:
+      - devnet
+
+
+  memcached:
+    hostname: memcached
+    image: bitnami/memcached:1.6.12
+    #ports:
+    #  - '11211:11211' 
     networks:
       - devnet
 

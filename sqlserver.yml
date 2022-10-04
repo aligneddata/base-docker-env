@@ -1,0 +1,14 @@
+version: '3'
+
+services: 
+
+    sqlserver:
+        container_name: sqlserver1234
+        hostname: sqlserver1234
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+          - '1433:1433'
+        environment:
+          - ACCEPT_EULA=Y
+          - SA_PASSWORD=sa111222333
+          
