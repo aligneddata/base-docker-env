@@ -7,6 +7,7 @@ version: '3'
 
 # Use example:
 # docker-compose -f devnet.yml up --scale spark-worker=2 --scale kafka=2
+# docker-compose --compatibility -f devnet.yml up ibmodm
 
 services:
 
@@ -50,8 +51,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
       POSTGRES_HOST_AUTH_METHOD: trust
-    #ports:
-    #  - 55432:5432
+    ports:
+      - 55432:5432
+      - 5432:5432
     volumes:
       #- /home/docker-data/postgres:/var/lib/postgresql/data
       - postgresvol:/var/lib/postgresql/data
@@ -176,11 +178,39 @@ services:
     networks:
       - devnet
 
+  # https://hub.docker.com/r/bitnami/geode
+  geode:
+    image: 'bitnami/geode:latest'
+    hostname: geode
+    ports:
+      - 7070:7070
+    networks:
+      - devnet
 
+  ibmodm:
+    hostname: ibmodm
+    image: ibmcom/odm:8.11.1
+    environment:
+      - LICENSE=accept
+      - SAMPLE=true
+      - JVM_ARGS='-Xmx3000m' 
+    ports:
+      - 9060:9060
+      - 9443:9443
+    volumes:
+      - /home/docker-data/ibmodm/dbdata:/config/dbdata/
+      - /home/docker-data/ibmodm/apps_01:/apps_01
+    networks:
+      - devnet
+    deploy:
+      resources:
+        limits:
+          memory: 3072M
+        reservations:
+          memory: 2048M
 networks:
   devnet:
 
 volumes:
   mariadbvol:
   postgresvol:
-
