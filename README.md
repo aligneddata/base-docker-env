@@ -12,3 +12,8 @@ database in postres:
 database: devdb
 table: t (i int)
 
+# Notes on In Memory Cache System
+* Redis is unsafe: https://towardsdatascience.com/redis-unsafe-at-any-speed-f2731f738a25
+* Insider promos Geode: https://stackoverflow.com/questions/44905709/caching-systems-redis-vs-geode-gemfirehttps://stackoverflow.com/questions/44905709/caching-systems-redis-vs-geode-gemfire
+* Memcached is not distributed.
+* TODO: try Couchbase next time.
