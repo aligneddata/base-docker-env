@@ -8,6 +8,7 @@ version: '3'
 # Use example:
 # docker-compose -f devnet.yml up --scale spark-worker=2 --scale kafka=2
 # docker-compose --compatibility -f devnet.yml up ibmodm
+# docker-compose --compatibility -f devnet.yml up ibmodm810
 
 services:
 
@@ -28,8 +29,8 @@ services:
     volumes:
       #- /home/docker-data/mariadb:/var/lib/mysql
       - mariadbvol:/var/lib/mysql
-    #ports:
-    #  - 53306:3306
+    ports:
+      - 3306:3306
     networks:
       - devnet
 
@@ -199,7 +200,29 @@ services:
       - 9443:9443
     volumes:
       - /home/docker-data/ibmodm/dbdata:/config/dbdata/
-      - /home/docker-data/ibmodm/apps_01:/apps_01
+      - /home/docker-data/ibmodm/apps:/apps
+    networks:
+      - devnet
+    deploy:
+      resources:
+        limits:
+          memory: 3072M
+        reservations:
+          memory: 2048M
+
+  ibmodm810:
+    hostname: ibmodm810
+    image: ibmcom/odm:8.10.5.1_21.2.0-amd64
+    environment:
+      - LICENSE=accept
+      - SAMPLE=true
+      - JVM_ARGS='-Xmx3000m'
+    ports:
+      - 19060:9060
+      - 19443:9443
+    volumes:
+      - /home/docker-data/ibmodm/dbdata810:/config/dbdata/
+      - /home/docker-data/ibmodm/apps:/apps
     networks:
       - devnet
     deploy:
