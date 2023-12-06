@@ -196,8 +196,8 @@ services:
       - SAMPLE=true
       - JVM_ARGS='-Xmx3000m' 
     ports:
-      - 9060:9060
-      - 9443:9443
+      - 29060:9060
+      - 29443:9443
     volumes:
       - /home/docker-data/ibmodm/dbdata:/config/dbdata/
       - /home/docker-data/ibmodm/apps:/apps
@@ -218,8 +218,8 @@ services:
       - SAMPLE=true
       - JVM_ARGS='-Xmx3000m'
     ports:
-      - 19060:9060
-      - 19443:9443
+      - 9060:9060
+      - 9443:9443
     volumes:
       - /home/docker-data/ibmodm/dbdata810:/config/dbdata/
       - /home/docker-data/ibmodm/apps:/apps
@@ -271,6 +271,22 @@ services:
       - IPC_LOCK
   
 
+  oraclexe:
+    image: 'gvenzl/oracle-xe'
+    hostname: oraclexe
+    ports:
+      - 1521:1521
+    volumes:
+      - oravol:/u01/app/oracle/oradata
+    environment:
+      - ORACLE_PASSWORD=dev6688
+    networks:
+      - devnet
+
+
+#docker run -d -p 1521:1521 -e ORACLE_PASSWORD=<your password> -v oracle-volume:/u01/app/oracle/oradata gvenzl/oracle-xe:11
+
+
 networks:
   devnet:
 
@@ -278,3 +294,4 @@ volumes:
   mariadbvol:
   postgresvol:
   jenkins_home:
+  oravol:
