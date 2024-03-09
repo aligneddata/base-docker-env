@@ -1,0 +1,20 @@
+version: '3'
+services:
+  geode:
+    image: 'geode:develop'
+    hostname: geode
+    entrypoint: 'sh'
+    command: '-c /geode/scripts/forever'
+    networks:
+      geode-sni-test:
+    volumes:
+      - ./geode-config:/geode/config:ro
+      - ./scripts:/geode/scripts
+  haproxy:
+    image: 'haproxy:2.1'
+    networks:
+      geode-sni-test:
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+networks:
+  geode-sni-test:
