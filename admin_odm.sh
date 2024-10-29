@@ -6,8 +6,10 @@ cmd=$1
 if [ "$cmd" = "start" ]
 then
     docker container start base-docker-env_ibmodm810_1
+    docker container start ft-setup_proxy_1
 elif [ "$cmd" = "stop" ]; then
     docker container stop base-docker-env_ibmodm810_1
+    docker container stop ft-setup_proxy_1
 else
     echo "Unable to support [$cmd]"
 fi
