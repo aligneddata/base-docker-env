@@ -179,14 +179,7 @@ services:
     networks:
       - devnet
 
-  # https://hub.docker.com/r/bitnami/geode
-  geode:
-    image: 'bitnami/geode:latest'
-    hostname: geode
-    ports:
-      - 7070:7070
-    networks:
-      - devnet
+  # 2024.10.29 Removed geode. Use the settings in repo geode-docker and refer to MY_README.md.
 
   ibmodm:
     hostname: ibmodm
@@ -283,6 +276,38 @@ services:
     networks:
       - devnet
 
+  debopr:
+    hostname: debopr
+    image: debian:12
+    ports:
+      - 1022:22
+    networks:
+      - devnet
+
+  hab:
+    hostname: hab
+    image: fintech/hab:latest
+    ports:
+      - 1022:22
+      - 28080:8080
+    volumes:
+      - oravol:/pub
+    networks:
+      - devnet
+
+  samba:
+    hostname: samba
+    image: dockurr/samba
+    container_name: samba
+    environment:
+      USER: "samba"
+      PASS: ${DOCKER_SAMBA_SECRET}
+    ports:
+      - 445:445
+    volumes:
+      - /ext/sambashare:/storage
+    networks:
+      - devnet
 
 #docker run -d -p 1521:1521 -e ORACLE_PASSWORD=<your password> -v oracle-volume:/u01/app/oracle/oradata gvenzl/oracle-xe:11
 
