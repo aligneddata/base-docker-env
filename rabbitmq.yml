@@ -10,6 +10,6 @@ services:
           - '8080:15672'
         environment:
           - RABBITMQ_DEFAULT_USER=rmq
-          - RABBITMQ_DEFAULT_PASS=rmq123
+          - RABBITMQ_DEFAULT_PASS=${RABBIT_MQ_PASS}
           - RABBITMQ_DEFAULT_VHOST=my_vhost
           
