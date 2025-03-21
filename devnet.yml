@@ -186,13 +186,13 @@ services:
     environment:
       - LICENSE=accept
       - SAMPLE=true
-      - JVM_ARGS='-Xmx3000m' 
+      - JVM_ARGS='-Xmx2048m' 
     ports:
-      - 29060:9060
-      - 29443:9443
+      - 19060:9060
+      - 19443:9443
     volumes:
-      - /home/docker-data/ibmodm/dbdata:/config/dbdata/
-      - /home/docker-data/ibmodm/apps:/apps
+      - /home/docker-data/ibmodm/dbdata811:/config/dbdata/
+      - /home/docker-data/ibmodm/apps811:/apps
     networks:
       - devnet
     deploy:
@@ -200,7 +200,7 @@ services:
         limits:
           memory: 3072M
         reservations:
-          memory: 2048M
+          memory: 1024M
 
   ibmodm810:
     hostname: ibmodm810
@@ -208,7 +208,7 @@ services:
     environment:
       - LICENSE=accept
       - SAMPLE=true
-      - JVM_ARGS='-Xmx3000m'
+      - JVM_ARGS='-Xmx2048m'
     ports:
       - 9060:9060
       - 9443:9443
@@ -222,7 +222,7 @@ services:
         limits:
           memory: 3072M
         reservations:
-          memory: 2048M
+          memory: 1024M
 
   jenkins:
     image: 'jenkins/jenkins:lts-jdk11'
