@@ -308,6 +308,15 @@ services:
     networks:
       - devnet
 
+  dynamodb:
+    hostname: dynamodb
+    image: amazon/dynamodb-local
+    ports:
+      - 38080:8080
+    networks:
+      - devnet
+
+
 #docker run -d -p 1521:1521 -e ORACLE_PASSWORD=<your password> -v oracle-volume:/u01/app/oracle/oradata gvenzl/oracle-xe:11
 
 
