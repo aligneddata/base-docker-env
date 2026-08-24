@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  mcp-postgres:
+    image: mcp/postgres
+    container_name: mcp-postgres
+    restart: unless-stopped
+    command:
+      - postgresql://stlinvrecon:NWKdxp125VFsO23Ch95t@192.168.1.213:5432/stlinvrecon
+
