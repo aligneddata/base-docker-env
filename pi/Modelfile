@@ -1,0 +1,27 @@
+FROM qwen2.5-coder:14b
+# qwen2.5-coder:7b
+
+# Context window — how much code/chat history the model can see at once.
+# 16k is plenty for most files; go to 32k if you paste large files/repos.
+PARAMETER num_ctx 32768
+
+# Lower temperature = more deterministic, less "creative" code
+PARAMETER temperature 0.2
+
+# Top-p / top-k trim unlikely tokens — tightens output further for code
+PARAMETER top_p 0.9
+PARAMETER top_k 40
+
+# Repeat penalty prevents loops in longer generations (useful for code blocks)
+PARAMETER repeat_penalty 1.1
+
+# System prompt — sets persistent behavior/persona
+SYSTEM """
+You are a senior software engineer. Write clean, correct, well-commented code.
+Prefer explicit error handling. When unsure, ask a clarifying question before assuming.
+"""
+
+
+# To build, run
+# ollama create qwen-coder-tuned -f Modelfile
+# ollama run qwen-coder-tuned

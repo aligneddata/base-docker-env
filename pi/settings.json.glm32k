@@ -1,0 +1,8 @@
+{
+  "defaultProvider": "ollama",
+  "defaultModel": "glm47_32k:latest",
+  "defaultThinkingLevel": "off",
+  "compactionThreshold": 0.75,
+  "defaultProjectTrust": "always",
+  "lastChangelogVersion": "0.84.4"
+}

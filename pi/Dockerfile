@@ -13,6 +13,9 @@ RUN apt-get -y update && apt-get install -y git curl
 
 # Install the Pi coding agent globally
 RUN npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+RUN pi install npm:pi-ultra-compact
+RUN pi install npm:pi-context-prune
+
 
 # Set workspace directory
 WORKDIR /workspace

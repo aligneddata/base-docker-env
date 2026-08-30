@@ -7,8 +7,8 @@
       "apiType": "openai",
       "models": [
         {
-          "id": "glm-4.7-flash:q4_K_M",
-          "name": "GLM",
+          "id": "qwen3.8:27b",
+          "name": "Qwen 3.8 27B (Ollama)",
           "contextWindow": 16384,
           "maxTokens": 16384,
           "compat": {

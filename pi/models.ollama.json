@@ -1,0 +1,23 @@
+{
+  "providers": {
+    "ollama": {
+      "baseUrl": "http://192.168.1.128:11434/v1",
+      "api": "openai-completions",
+      "apiKey": "ollama",
+      "models": [
+        {
+          "id": "qwen3.8:27b",
+          "name": "Qwen38",
+          "parameters": {
+            "max_tokens": 64000,
+            "options": {
+              "num_ctx": 128000,
+              "num_predict": 64000
+            }
+	  }
+        }
+      ]
+    }
+  }
+}
+

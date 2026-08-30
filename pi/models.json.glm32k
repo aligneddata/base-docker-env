@@ -7,10 +7,10 @@
       "apiType": "openai",
       "models": [
         {
-          "id": "glm-4.7-flash:q4_K_M",
+          "id": "glm47_32k:latest",
           "name": "GLM",
-          "contextWindow": 16384,
-          "maxTokens": 16384,
+          "contextWindow": 32768,
+          "maxTokens": 32768,
           "compat": {
             "supportsThinkingTokenBudget": false
           }
