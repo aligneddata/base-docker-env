@@ -1,0 +1,8 @@
+{
+  "defaultProvider": "qwen",
+  "defaultModel": "qwen3.5:4b",
+  "defaultThinkingLevel": "off",
+  "compactionThreshold": 0.75,
+  "defaultProjectTrust": "always",
+  "lastChangelogVersion": "0.84.4"
+}
