@@ -1,14 +1,14 @@
 {
   "providers": {
-    "ollama": {
-      "baseUrl": "http://192.168.1.128:11434/v1",
+    "qwen": {
+      "baseUrl": "http://172.25.55.19:11434/v1",
       "api": "openai-completions",
       "apiKey": "ollama",
       "apiType": "openai",
       "models": [
         {
-          "id": "qwen3.8:27b",
-          "name": "Qwen 3.8 27B (Ollama)",
+          "id": "qwen3.5:4b"
+          "name": "QW",
           "contextWindow": 16384,
           "maxTokens": 16384,
           "compat": {

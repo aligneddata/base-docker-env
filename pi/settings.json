@@ -1,6 +1,6 @@
 {
   "defaultProvider": "ollama",
-  "defaultModel": "glm-4.7-flash:q4_K_M",
+  "defaultModel": "qw27b_32k:latest",
   "defaultThinkingLevel": "off",
   "compactionThreshold": 0.75,
   "defaultProjectTrust": "always",

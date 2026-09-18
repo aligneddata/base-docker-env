@@ -1,6 +1,6 @@
 {
-  "defaultProvider": "ollama",
-  "defaultModel": "glm47_32k:latest",
+  "defaultProvider": "qwen",
+  "defaultModel": "qwen3.5:4b",
   "defaultThinkingLevel": "off",
   "compactionThreshold": 0.75,
   "defaultProjectTrust": "always",
