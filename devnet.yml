@@ -317,6 +317,24 @@ services:
       - devnet
 
 
+  crawl4ai:
+    hostname: crawl4ai
+    image: unclecode/crawl4ai:latest
+    ports:
+      - "0.0.0.0:11235:11235"
+    shm_size: 3g
+    networks:
+      - devnet
+    restart: unless-stopped
+    environment:
+      - CRAWL4AI_API_TOKEN=${CRAWL4AI_API_TOKEN:-}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11235/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+
 #docker run -d -p 1521:1521 -e ORACLE_PASSWORD=<your password> -v oracle-volume:/u01/app/oracle/oradata gvenzl/oracle-xe:11
 
 
